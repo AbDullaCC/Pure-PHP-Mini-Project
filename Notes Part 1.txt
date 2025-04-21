@@ -1,0 +1,146 @@
+-php variables are passed by *value* by default
+-"<?=" is shorthand for "<?php echo"
+
+--$$var => variable name = value of $var
+------------------------
+boolean false print as blank "", and true as 1
+
+strict types - type hint
+//declare(strict_types = 1);
+
+--------INT-------------
+you can do: int x = 2_000_000;
+
+--------FLOAT------------
+floor((0.1 + 0.7) * 10) = 7 .... !8 !!!!
+//7.99999999998;
+
+never compare floats normally
+
+NAN = undefined: log(-1)
+INF = infinity: max float * 2
+
+
+-------STRING---------------
+//Heredoc: for long text to not use escapes.etc... can use variables in it
+$txt = <<<TEXT
+............ $x
+TEXT;
+
+//Nowdoc: for long text to not use escapes.etc... can NOT use variables in it
+$txt = <<<'TEXT'
+............
+TEXT;
+
+
+------------NULL----------------
+can be compared by: is_null or ===
+
+------------ARRAY---------------
+unset($x[4]) to destroy an element
+//but it doesn't reindex the elements
+
+unlike array_pop() and array_shift() which reindex elements
+
+isset: will be false if key exists but val is null, but array_key_exists: will return true
+
+-----------OPERATORS-------------
+** is the exp: x ** y
+
+==: noقmal comp, exp: x = 5, y = '5', x === y => true
+===: strict comp (compares the datatype too) exp: x = 5, y = '5', x === y => false
+??: the null operator, if var is null then what's after the "??" gets evaluated
+&,|,^: its the and , or, xor operations // 5 ^ 2 = 7
+if(true || hello()) // here the hello() function will be short-circuited!
+<=>: comparator op // 5 <=> 3 ===> 1
+
+<<, >> : shift left, right // 5 << 1 = 10;
+
+[1,2] + [3, 4, 5] = [1, 2, 5]; // on indexes (keys);
+
+----------CONDITIONS----------------
+break 2; //breaks out of 2 loops (nested)
+
+---------LOOPS------------------
+foreach($arr as $element).....
+$element.... //you can still use $element after loop even it wasn't declared
+
+----------MATCH-------------
+match($val){
+1 => sometinhg
+2 => something...
+..
+}
+
+match returns the value // $x = match(){..}
+
+--------DECLARE--------------
+declare(ticks = 1)...register_ticks("func") // almost every statement counts as a tick
+declare() // only applies to the file it was typed in
+
+-------REQUIRE-------------
+require: gives error when file not found
+include: doesn't .............
+
+require_once, include_once: evaluate the statements in the file only 1 time even if required multiple times
+
+-----------FUNCTIONS--------------
+type hint // function abc(): int,,,,,,,,,,, abc(): ?int // to allow null returns
+can set mult return types: int|float|array == mixed
+
+ellipsis operator: ...$numbers
+//used in parameters to accept multi elements
+//also used in argument to destruct array into elements
+
+--------SCOPES-------------
+//if u want to get global var in a function: global $x
+OR: $GLOBAL['x']
+
+static $x// $x val will be saved in the same scope
+
+---------Functions Types------------
+1-variable functions// sum(); $x = 'sum' ===> echo $x();
+2-anonymous: $x = function ff() use () {};.......
+3-callable:
+array_map(functions(..) { //code }, $arr);
+or// array_map ($x, $arr) if $x is a function
+or// array_map('x', $arr) if there is a function named 'x'
+
+all anonymous functions are closure functions by default;
+
+4-arrow function: fn($x) => $x * 2;
+* see parent variables automatically
+* implicit return
+* dont accept multi statements;
+
+-------DATE--------------
+time() // gives int of second since 1970
+date('format', time())//display the date
+mktime(.,.,.,.,.) // build a specific date;
+strtotime('tomorrow' ,,, 'yesterday',....);
+
+---------ARRAY FUNC-----------
+array_filter($arr, callable, ATTRIBUTE//to specify if u want key or val or both);
+array_values($arr)// reindexes the array if indexes are missing;
+array_reduce($arr, fn($carry, $element) => $carry + $element);
+array_keys($arr)// keys,,,,,, can put argument $find after $arr to get only keys with $find val
+
+asort($arr)// sort by val
+ksort() // by key
+usort($arr, $callable);
+
+[$a, $b, $c] = $arr //destructor
+
+-------ERROR HANDLING--------
+trigger_error('msg', ERROR TYPE //E_USER_ERROR);
+display_errors in php.ini (1 or 0) to show errors to users (never use in prod);
+
+set_error_handler('urHandler', E_ALL);
+
+--------FILES------------
+php auto cache some functions, like filesize(), so when used again after edit it will still give the same value
+-use clearstatcache();
+
+fopen: returns a resource datatype
+fgets($file): returns a line from file
+unlink($f): remove file
